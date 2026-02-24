@@ -1,4 +1,3 @@
-// Service Worker para PWA - Supervila DRE (Versão Simples)
 const CACHE_NAME = 'supervila-dre-v1';
 const urlsToCache = [
   '/',
@@ -6,7 +5,6 @@ const urlsToCache = [
   '/style.css',
   '/script.js',
   '/manifest.json',
-  '/assets/logo_supervila.png',
   'https://cdn.jsdelivr.net/npm/chart.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js',
@@ -14,94 +12,72 @@ const urlsToCache = [
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'
 ];
 
-// Instalação - cache dos arquivos
+// Instalação do Service Worker
 self.addEventListener('install', event => {
-  console.log('[Service Worker] Instalando...');
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('[Service Worker] Cache aberto');
+        console.log('Cache aberto');
         return cache.addAll(urlsToCache);
       })
-      .then(() => self.skipWaiting())
   );
 });
 
-// Ativação - limpa caches antigos
+// Ativação e limpeza de caches antigos
 self.addEventListener('activate', event => {
-  console.log('[Service Worker] Ativando...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
         cacheNames.map(cacheName => {
           if (cacheName !== CACHE_NAME) {
-            console.log('[Service Worker] Removendo cache antigo:', cacheName);
+            console.log('Removendo cache antigo:', cacheName);
             return caches.delete(cacheName);
           }
         })
       );
-    }).then(() => self.clients.claim())
+    })
   );
 });
 
-// Estratégia: Cache First com fallback para rede
+// Interceptar requisições e servir do cache quando offline
 self.addEventListener('fetch', event => {
-  // Ignorar requisições de API (Google Sheets)
-  if (event.request.url.includes('script.google.com')) {
-    event.respondWith(
-      fetch(event.request)
-        .catch(() => {
-          return new Response(
-            JSON.stringify({ 
-              status: 'offline', 
-              mensagem: 'Você está offline. Os dados não puderam ser carregados.' 
-            }),
-            { headers: { 'Content-Type': 'application/json' } }
-          );
-        })
-    );
-    return;
-  }
-
-  // Para outros recursos: Cache First
   event.respondWith(
     caches.match(event.request)
       .then(response => {
+        // Cache hit - retorna resposta do cache
         if (response) {
-          return response; // Retorna do cache
+          return response;
         }
-        
-        // Se não está no cache, busca na rede
-        return fetch(event.request).then(networkResponse => {
-          // Verifica se é uma resposta válida
-          if (!networkResponse || networkResponse.status !== 200) {
-            return networkResponse;
-          }
-          
-          // Cachear recursos do mesmo domínio ou CDNs
-          const url = new URL(event.request.url);
-          if (url.origin === location.origin || 
-              url.hostname.includes('cdn.jsdelivr.net') || 
-              url.hostname.includes('cdnjs.cloudflare.com') ||
-              url.hostname.includes('fonts.googleapis.com')) {
-            
-            const responseToCache = networkResponse.clone();
+
+        // Clone da requisição
+        const fetchRequest = event.request.clone();
+
+        return fetch(fetchRequest)
+          .then(response => {
+            // Verifica se recebemos uma resposta válida
+            if (!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            // Clone da resposta
+            const responseToCache = response.clone();
+
             caches.open(CACHE_NAME)
               .then(cache => {
-                cache.put(event.request, responseToCache);
-              })
-              .catch(err => console.log('[Service Worker] Erro ao cachear:', err));
-          }
-          
-          return networkResponse;
-        }).catch(error => {
-          console.log('[Service Worker] Falha na rede:', error);
-          // Retorna uma resposta de erro simples
-          return new Response('Offline', { 
-            status: 503, 
-            statusText: 'Service Unavailable' 
+                // Não armazenar em cache chamadas de API
+                if (!event.request.url.includes('script.google.com')) {
+                  cache.put(event.request, responseToCache);
+                }
+              });
+
+            return response;
+          })
+          .catch(() => {
+            // Se falhar e for uma página HTML, mostra página offline
+            if (event.request.headers.get('accept').includes('text/html')) {
+              return caches.match('/offline.html');
+            }
           });
-        });
       })
   );
 });
