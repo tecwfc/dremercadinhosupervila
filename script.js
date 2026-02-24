@@ -1915,6 +1915,168 @@ function atualizarMargensDRE() {
   `;
 }
 
+
+// ==================== PWA INSTALL PROMPT ====================
+let deferredPrompt;
+const installButton = document.createElement('button');
+
+// Criar botão de instalação flutuante
+function createInstallButton() {
+  installButton.id = 'install-button';
+  installButton.innerHTML = `
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+      <polyline points="7 10 12 15 17 10"/>
+      <line x1="12" y1="15" x2="12" y2="3"/>
+    </svg>
+    <span>Instalar App</span>
+  `;
+  
+  installButton.style.cssText = `
+    position: fixed;
+    bottom: 80px;
+    right: 20px;
+    background: #e31d1a;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 12px 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    display: none;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(227, 29, 26, 0.3);
+    cursor: pointer;
+    z-index: 1000;
+    transition: all 0.3s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+  `;
+  
+  installButton.addEventListener('mouseenter', () => {
+    installButton.style.transform = 'translateY(-2px)';
+    installButton.style.boxShadow = '0 6px 16px rgba(227, 29, 26, 0.4)';
+  });
+  
+  installButton.addEventListener('mouseleave', () => {
+    installButton.style.transform = 'translateY(0)';
+    installButton.style.boxShadow = '0 4px 12px rgba(227, 29, 26, 0.3)';
+  });
+  
+  installButton.addEventListener('click', async () => {
+    if (!deferredPrompt) return;
+    
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      console.log('Usuário aceitou instalar o app');
+      installButton.style.display = 'none';
+    }
+    
+    deferredPrompt = null;
+  });
+  
+  document.body.appendChild(installButton);
+}
+
+// Detectar quando o app pode ser instalado
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  
+  // Mostrar botão de instalação apenas se o app não estiver instalado
+  if (!window.matchMedia('(display-mode: standalone)').matches) {
+    installButton.style.display = 'flex';
+  }
+});
+
+// Detectar quando o app foi instalado
+window.addEventListener('appinstalled', () => {
+  console.log('App instalado com sucesso!');
+  installButton.style.display = 'none';
+  deferredPrompt = null;
+});
+
+// Verificar se já está instalado
+window.addEventListener('load', () => {
+  if (window.matchMedia('(display-mode: standalone)').matches) {
+    console.log('App rodando em modo standalone');
+    // Adicionar classe para ajustes no modo app
+    document.body.classList.add('app-mode');
+  }
+});
+
+// Registrar Service Worker
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registrado com sucesso:', registration.scope);
+      })
+      .catch(error => {
+        console.log('Falha no registro do ServiceWorker:', error);
+      });
+  });
+}
+
+// Detectar conexão com internet
+window.addEventListener('online', () => {
+  document.body.classList.remove('offline');
+  if (typeof mostrarNotificacao === 'function') {
+    mostrarNotificacao('✅ Conexão restabelecida', 'success');
+  }
+});
+
+window.addEventListener('offline', () => {
+  document.body.classList.add('offline');
+  if (typeof mostrarNotificacao === 'function') {
+    mostrarNotificacao('📴 Modo offline - Dados podem estar desatualizados', 'warning');
+  }
+});
+
+// Inicializar botão de instalação
+createInstallButton();
+
+// Adicionar CSS para modo offline e app mode
+const style = document.createElement('style');
+style.textContent = `
+  .offline .content-scroll {
+    opacity: 0.8;
+  }
+  
+  .app-mode {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  
+  .app-mode .bottom-nav {
+    padding-bottom: max(env(safe-area-inset-bottom), 8px);
+  }
+  
+  @media (min-width: 1024px) {
+    #install-button {
+      bottom: 30px;
+      right: 30px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    #install-button {
+      bottom: 70px;
+      right: 15px;
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+    
+    #install-button svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+`;
+document.head.appendChild(style);
+
     // Exportar funções
     window.toggleSenha = toggleSenha;
     window.verificarLogin = verificarLogin;
