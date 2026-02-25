@@ -1,37 +1,35 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
   <title>Supervila - Sistema DRE</title>
 
-  <!-- Bibliotecas -->
+  <!-- Bibliotecas (CDNs - esses URLs externos não mudam) -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Supervila DRE">
-<meta name="mobile-web-app-capable" content="yes">
-<link rel="apple-touch-icon" href="assets/icon-192x192.png">
-<link rel="apple-touch-startup-image" href="assets/icon-512x512.png">
-
+  
+  <!-- PWA Meta Tags -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Supervila DRE">
+  <meta name="mobile-web-app-capable" content="yes">
+  
+  <!-- ARQUIVOS LOCAIS - Use caminhos relativos SEM a barra inicial -->
   <link rel="stylesheet" href="style.css">
   <link rel="manifest" href="manifest.json">
-
-
+  <link rel="apple-touch-icon" href="assets/icon-192x192.png">
+  <link rel="apple-touch-startup-image" href="assets/icon-512x512.png">
 </head>
-
 <body>
   <!-- TELA DE LOGIN -->
   <div id="telaLogin">
     <div class="login-card">
       <div class="login-logo">
+        <!-- Caminho da logo - relativo -->
         <img src="assets/logo_supervila.png" alt="Logo Supervila">
         <h2>Sistema DRE</h2>
         <p>Faça login para acessar</p>
@@ -722,7 +720,7 @@
     </div>
   </div>
 
-  <script src="script.js"></script>
+   <script src="script.js"></script>
 </body>
 
 </html>
