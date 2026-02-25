@@ -2105,4 +2105,67 @@ document.head.appendChild(style);
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
 
+// ==================== CORREÇÕES PARA CELULAR ====================
+function fixMobileViewport() {
+  // Corrigir o problema do viewport em alguns celulares
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  
+  // Ajustar a altura da tela de login
+  const telaLogin = document.getElementById('telaLogin');
+  if (telaLogin) {
+    telaLogin.style.minHeight = `${window.innerHeight}px`;
+  }
+  
+  // Ajustar o conteúdo principal
+  const app = document.getElementById('app');
+  if (app && app.classList.contains('show')) {
+    app.style.minHeight = `${window.innerHeight}px`;
+  }
+}
 
+// Detectar se é celular
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+// Ajustar quando a tela mudar de tamanho (rotação)
+window.addEventListener('resize', () => {
+  fixMobileViewport();
+  
+  // Re-renderizar gráficos se necessário
+  if (isMobile()) {
+    setTimeout(() => {
+      const rec = parseFloat(document.getElementById("cardReceitas")?.textContent.replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
+      const pag = parseFloat(document.getElementById("cardPago")?.textContent.replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
+      if (rec > 0 || pag > 0) renderGraficos(rec, pag);
+    }, 100);
+  }
+});
+
+// Executar quando a página carregar
+window.addEventListener('load', () => {
+  fixMobileViewport();
+  
+  // Se for celular, fazer ajustes adicionais
+  if (isMobile()) {
+    document.body.classList.add('is-mobile');
+    
+    // Ajustar a rolagem
+    document.querySelector('.content-scroll')?.addEventListener('touchstart', () => {}, { passive: true });
+  }
+});
+
+// Executar também quando o DOM estiver pronto
+document.addEventListener('DOMContentLoaded', fixMobileViewport);
+
+// ==================== CORREÇÃO PARA O BOTÃO DE LOGIN NO CELULAR ====================
+// Garantir que o teclado não esconda o campo de senha
+const senhaInput = document.getElementById('inputSenha');
+if (senhaInput) {
+  senhaInput.addEventListener('focus', () => {
+    setTimeout(() => {
+      senhaInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }, 300);
+  });
+}
