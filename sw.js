@@ -1,10 +1,11 @@
-const CACHE_NAME = 'supervila-dre-v1';
+const CACHE_NAME = 'supervila-dre-v2';
 const urlsToCache = [
   '/',
   '/index.html',
+  '/manifest.json',
   '/style.css',
   '/script.js',
-  '/manifest.json',
+  '/offline.html',
   'https://cdn.jsdelivr.net/npm/chart.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js',
   'https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js',
@@ -12,19 +13,25 @@ const urlsToCache = [
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap'
 ];
 
-// Instalação do Service Worker
+// Instalação
 self.addEventListener('install', event => {
+  console.log('Service Worker: Instalando...');
+  self.skipWaiting();
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
         console.log('Cache aberto');
         return cache.addAll(urlsToCache);
       })
+      .catch(error => {
+        console.error('Erro no cache:', error);
+      })
   );
 });
 
-// Ativação e limpeza de caches antigos
+// Ativação
 self.addEventListener('activate', event => {
+  console.log('Service Worker: Ativando...');
   event.waitUntil(
     caches.keys().then(cacheNames => {
       return Promise.all(
@@ -37,43 +44,40 @@ self.addEventListener('activate', event => {
       );
     })
   );
+  return self.clients.claim();
 });
 
-// Interceptar requisições e servir do cache quando offline
+// Interceptar requisições
 self.addEventListener('fetch', event => {
+  // Não fazer cache de chamadas de API
+  if (event.request.url.includes('script.google.com') || 
+      event.request.url.includes('googleapis') ||
+      event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then(response => {
-        // Cache hit - retorna resposta do cache
         if (response) {
           return response;
         }
 
-        // Clone da requisição
-        const fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest)
+        return fetch(event.request)
           .then(response => {
-            // Verifica se recebemos uma resposta válida
             if (!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
 
-            // Clone da resposta
             const responseToCache = response.clone();
-
             caches.open(CACHE_NAME)
               .then(cache => {
-                // Não armazenar em cache chamadas de API
-                if (!event.request.url.includes('script.google.com')) {
-                  cache.put(event.request, responseToCache);
-                }
+                cache.put(event.request, responseToCache);
               });
 
             return response;
           })
           .catch(() => {
-            // Se falhar e for uma página HTML, mostra página offline
             if (event.request.headers.get('accept').includes('text/html')) {
               return caches.match('/offline.html');
             }
