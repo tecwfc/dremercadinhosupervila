@@ -500,7 +500,6 @@
       renderGraficos(tRec, tPag);
     }
 
-    // ==================== LANÇAMENTO ====================
     // ==================== LANÇAMENTO COM HORA ====================
 async function lancar() {
   if (!usuarioLogado) {
@@ -555,7 +554,7 @@ async function lancar() {
       usuario: usuarioLogado.usuario,
       senha: usuarioLogado.senha,
       desc: desc,
-      data: dataFmt, // 🔥 AGORA ENVIA COM HORA
+      data: dataFmt, // 🔥 
       recebido: tipo === "recebido" ? valorNum : 0,
       pago: tipo === "pago" ? valorNum : 0,
       dreClass: tipoDRE
@@ -1340,7 +1339,7 @@ function atualizarFiltroPeriodo() {
     }
 
     // ==================== PDF ====================
-    // ==================== PDF DO LIVRO DE CAIXA BONITÃO ====================
+  
 async function gerarPDFLivroCaixa() {
   if (!usuarioLogado) return;
   
@@ -2105,67 +2104,68 @@ document.head.appendChild(style);
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
 
-// ==================== CORREÇÕES PARA CELULAR ====================
-function fixMobileViewport() {
-  // Corrigir o problema do viewport em alguns celulares
-  const vh = window.innerHeight * 0.01;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
-  
-  // Ajustar a altura da tela de login
-  const telaLogin = document.getElementById('telaLogin');
-  if (telaLogin) {
-    telaLogin.style.minHeight = `${window.innerHeight}px`;
-  }
-  
-  // Ajustar o conteúdo principal
-  const app = document.getElementById('app');
-  if (app && app.classList.contains('show')) {
-    app.style.minHeight = `${window.innerHeight}px`;
-  }
-}
 
-// Detectar se é celular
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
-// Ajustar quando a tela mudar de tamanho (rotação)
-window.addEventListener('resize', () => {
-  fixMobileViewport();
-  
-  // Re-renderizar gráficos se necessário
-  if (isMobile()) {
-    setTimeout(() => {
-      const rec = parseFloat(document.getElementById("cardReceitas")?.textContent.replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
-      const pag = parseFloat(document.getElementById("cardPago")?.textContent.replace(/[^\d,-]/g, '').replace(',', '.')) || 0;
-      if (rec > 0 || pag > 0) renderGraficos(rec, pag);
-    }, 100);
-  }
-});
-
-// Executar quando a página carregar
-window.addEventListener('load', () => {
-  fixMobileViewport();
-  
-  // Se for celular, fazer ajustes adicionais
-  if (isMobile()) {
-    document.body.classList.add('is-mobile');
+// ==================== AJUSTES PARA CELULAR ====================
+function adjustForMobile() {
+  if (window.innerWidth <= 768) {
+    // Ajustar a altura da viewport
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
     
-    // Ajustar a rolagem
-    document.querySelector('.content-scroll')?.addEventListener('touchstart', () => {}, { passive: true });
+    // Ajustar o padding-bottom do conteúdo baseado na altura da bottom-nav
+    const bottomNav = document.querySelector('.bottom-nav');
+    if (bottomNav) {
+      const navHeight = bottomNav.offsetHeight;
+      document.documentElement.style.setProperty('--bottom-nav-height', `${navHeight}px`);
+    }
+    
+    // Scroll automático para o topo quando mudar de aba
+    const contentScroll = document.querySelector('.content-scroll');
+    if (contentScroll) {
+      contentScroll.scrollTop = 0;
+    }
+  }
+}
+
+// Detectar quando o teclado abre/fecha (importante para não esconder campos)
+let originalViewportHeight = window.innerHeight;
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth <= 768) {
+    const currentHeight = window.innerHeight;
+    
+    // Se a altura diminuiu muito, provavelmente o teclado abriu
+    if (originalViewportHeight - currentHeight > 100) {
+      document.body.classList.add('keyboard-open');
+      
+      // Rolar para o campo focado
+      const activeElement = document.activeElement;
+      if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'SELECT' || activeElement.tagName === 'TEXTAREA')) {
+        setTimeout(() => {
+          activeElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    } else {
+      document.body.classList.remove('keyboard-open');
+    }
+    
+    originalViewportHeight = currentHeight;
   }
 });
 
-// Executar também quando o DOM estiver pronto
-document.addEventListener('DOMContentLoaded', fixMobileViewport);
+// Chamar no load e em mudanças de orientação
+window.addEventListener('load', adjustForMobile);
+window.addEventListener('orientationchange', adjustForMobile);
+window.addEventListener('resize', adjustForMobile);
 
-// ==================== CORREÇÃO PARA O BOTÃO DE LOGIN NO CELULAR ====================
-// Garantir que o teclado não esconda o campo de senha
-const senhaInput = document.getElementById('inputSenha');
-if (senhaInput) {
-  senhaInput.addEventListener('focus', () => {
-    setTimeout(() => {
-      senhaInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }, 300);
-  });
-}
+// Chamar também quando mudar de aba
+const observer = new MutationObserver(() => {
+  setTimeout(adjustForMobile, 100);
+});
+
+observer.observe(document.querySelector('.content-scroll') || document.body, {
+  childList: true,
+  subtree: true,
+  attributes: true,
+  attributeFilter: ['class']
+});
