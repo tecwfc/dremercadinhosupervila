@@ -2104,3 +2104,5 @@ document.head.appendChild(style);
     if ('serviceWorker' in navigator) {
       navigator.serviceWorker.register('./sw.js').catch(() => {});
     }
+
+
