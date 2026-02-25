@@ -2543,3 +2543,915 @@ html, body {
   height: 14px;
   opacity: 0.7;
 }
+/* ==================== CORREÇÕES PARA CELULAR ==================== */
+
+/* Ajustar a tela de login para caber na vertical */
+@media (max-width: 480px) {
+  #telaLogin {
+    padding: 10px;
+    align-items: flex-start;
+    padding-top: 20px;
+  }
+
+  .login-card {
+    padding: 16px 12px;
+    margin: 0;
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .login-logo img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .login-logo h2 {
+    font-size: 18px;
+  }
+
+  .login-logo p {
+    font-size: 12px;
+  }
+
+  .field input,
+  .field select {
+    padding: 8px 10px;
+    font-size: 13px;
+  }
+
+  .btn-login {
+    height: 40px;
+    font-size: 13px;
+  }
+}
+
+/* Ajustar o conteúdo principal */
+@media (max-width: 768px) {
+  /* Topbar mais compacta */
+  .topbar {
+    padding: 6px 12px;
+  }
+
+  .logo-top {
+    width: 20px;
+    height: 20px;
+  }
+
+  .unidade-sm {
+    font-size: 12px;
+  }
+
+  /* Cards do dashboard */
+  .cards-grid {
+    gap: 6px;
+  }
+
+  .stat-card {
+    padding: 8px;
+  }
+
+  .stat-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+  }
+
+  .stat-value {
+    font-size: 13px;
+  }
+
+  .stat-value.large {
+    font-size: 15px;
+  }
+
+  /* Welcome card */
+  .welcome-card {
+    padding: 12px;
+  }
+
+  .welcome-content h2 {
+    font-size: 16px;
+  }
+
+  .welcome-content p {
+    font-size: 12px;
+  }
+
+  .welcome-icon {
+    font-size: 28px;
+  }
+
+  /* Gráficos */
+  .chart-container {
+    height: 140px;
+  }
+
+  /* DRE cards */
+  .dre-card {
+    padding: 8px;
+  }
+
+  .dre-icon {
+    font-size: 14px;
+  }
+
+  .dre-label {
+    font-size: 10px;
+  }
+
+  .dre-value {
+    font-size: 13px;
+  }
+
+  /* Formulário */
+  .form-container {
+    padding: 12px;
+  }
+
+  .form-input, .form-select {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 10px;
+    font-size: 13px;
+  }
+
+  /* Livro caixa */
+  .balance-card {
+    padding: 12px;
+  }
+
+  .balance-label {
+    font-size: 11px;
+  }
+
+  .balance-value {
+    font-size: 18px;
+  }
+
+  .balance-icon {
+    font-size: 24px;
+  }
+
+  .entry-card {
+    padding: 8px;
+  }
+
+  .entry-desc {
+    font-size: 13px;
+  }
+
+  .entry-badge {
+    font-size: 8px;
+    padding: 2px 6px;
+  }
+
+  .entry-meta {
+    font-size: 11px;
+  }
+
+  .entry-value {
+    font-size: 14px;
+  }
+
+  .entry-actions button {
+    padding: 6px;
+    font-size: 11px;
+  }
+
+  .entry-actions button svg {
+    width: 12px;
+    height: 12px;
+  }
+
+  /* Totais do livro */
+  .livro-totais {
+    padding: 8px;
+  }
+
+  .livro-totais-header h4 {
+    font-size: 12px;
+  }
+
+  .totais-card {
+    padding: 6px;
+  }
+
+  .totais-icon {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+  }
+
+  .totais-label {
+    font-size: 9px;
+  }
+
+  .totais-valor {
+    font-size: 13px;
+  }
+
+  .totais-detalhe {
+    font-size: 9px;
+    gap: 6px;
+  }
+
+  /* Margens DRE */
+  .margem-card {
+    padding: 12px;
+  }
+
+  .margem-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
+  }
+
+  .margem-label {
+    font-size: 11px;
+  }
+
+  .margem-valor {
+    font-size: 20px;
+  }
+
+  .margem-percentual {
+    font-size: 12px;
+  }
+
+  .margem-status {
+    padding: 4px 8px;
+    font-size: 10px;
+  }
+
+  /* Configurações */
+  .config-card {
+    padding: 12px;
+  }
+
+  .config-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .config-card-header h3 {
+    font-size: 14px;
+  }
+
+  .config-card-header p {
+    font-size: 11px;
+  }
+
+  .config-input, .config-select {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  /* Modal */
+  .modal-box {
+    border-radius: 16px 16px 0 0;
+  }
+
+  .modal-header {
+    padding: 12px;
+  }
+
+  .modal-header h3 {
+    font-size: 15px;
+  }
+
+  .modal-body {
+    padding: 12px;
+  }
+
+  .modal-input, .modal-select {
+    padding: 8px;
+    font-size: 13px;
+  }
+
+  .modal-footer {
+    padding: 12px;
+  }
+
+  .modal-footer .btn-primary, 
+  .modal-footer .btn-secondary {
+    padding: 8px;
+    font-size: 13px;
+  }
+}
+
+/* Ajustes para telas muito pequenas */
+@media (max-width: 360px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card.highlight {
+    grid-column: span 1;
+  }
+
+  .filter-body {
+    flex-direction: column;
+  }
+
+  .filter-select, .filter-input {
+    width: 100%;
+  }
+
+  .btn-pdf, .btn-del {
+    width: 100%;
+  }
+
+  .entry-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .entry-badge {
+    align-self: flex-start;
+  }
+}
+
+/* Corrigir o botão de instalação no celular */
+@media (max-width: 768px) {
+  #install-button {
+    bottom: 70px;
+    right: 10px;
+    padding: 8px 14px;
+    font-size: 12px;
+  }
+
+  #install-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Ajustar o modal para não cobrir toda a tela */
+.modal-overlay {
+  align-items: flex-end;
+}
+
+.modal-box {
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+/* Melhorar a rolagem no celular */
+.content-scroll {
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* Ajustar o bottom nav para não cobrir conteúdo */
+.bottom-nav {
+  backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0.95);
+}
+
+/* Corrigir o espaçamento do conteúdo */
+.content-scroll {
+  padding-bottom: calc(70px + env(safe-area-inset-bottom));
+}
+
+/* Ajustar a tela de login para ocupar toda a altura */
+#telaLogin {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+html, body {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+}
+
+/* ==================== CORREÇÕES PARA BARRA DE NAVEGAÇÃO NO CELULAR ==================== */
+
+:root {
+  --bottom-nav-height: 60px;
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* Ajustar o conteúdo para não ficar atrás da barra de navegação */
+.content-scroll {
+  padding-bottom: calc(var(--bottom-nav-height) + var(--safe-bottom) + 10px) !important;
+}
+
+/* Garantir que a barra de navegação não sobreponha */
+.bottom-nav {
+  height: calc(var(--bottom-nav-height) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+  background: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+/* Ajustar os cards para não ficarem espremidos */
+.entry-card {
+  margin-bottom: 8px;
+}
+
+/* Ajustar o último card para não ficar atrás da barra */
+.entries-list > :last-child {
+  margin-bottom: 10px;
+}
+
+/* Melhorar a visualização dos cards no celular */
+@media (max-width: 768px) {
+  /* Ajustar altura da viewport */
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    position: fixed;
+    width: 100%;
+  }
+
+  #app {
+    height: 100vh;
+    height: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .content-scroll {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding: 12px;
+    padding-bottom: calc(70px + env(safe-area-inset-bottom));
+  }
+
+  /* Ajustar a topbar */
+  .topbar {
+    flex-shrink: 0;
+    padding: 8px 12px;
+    padding-top: max(8px, env(safe-area-inset-top));
+    background: white;
+    z-index: 100;
+  }
+
+  /* Ajustar os cards do dashboard */
+  .cards-grid {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .stat-card {
+    padding: 10px;
+  }
+
+  .stat-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .stat-label {
+    font-size: 10px;
+  }
+
+  .stat-value {
+    font-size: 14px;
+  }
+
+  /* Ajustar os cards de entrada no livro caixa */
+  .entry-card {
+    padding: 12px;
+    margin-bottom: 8px;
+    border-radius: 12px;
+  }
+
+  .entry-header {
+    margin-bottom: 8px;
+  }
+
+  .entry-title {
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .entry-desc {
+    font-size: 14px;
+    font-weight: 600;
+    flex: 1;
+  }
+
+  .entry-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+  }
+
+  .entry-dre-badge {
+    font-size: 10px;
+    padding: 3px 8px;
+    margin-top: 4px;
+    display: inline-flex;
+    width: fit-content;
+  }
+
+  .entry-body {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 6px;
+    padding: 8px 0;
+  }
+
+  .entry-meta {
+    font-size: 12px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .entry-value {
+    font-size: 16px;
+    font-weight: 700;
+    align-self: flex-start;
+  }
+
+  .entry-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+  }
+
+  .entry-actions button {
+    flex: 1;
+    padding: 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    border-radius: 8px;
+  }
+
+  /* Ajustar os totais do livro */
+  .livro-totais {
+    padding: 12px;
+    margin-bottom: 12px;
+    border-radius: 16px;
+  }
+
+  .livro-totais-grid {
+    gap: 8px;
+  }
+
+  .totais-card {
+    padding: 10px;
+  }
+
+  .totais-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
+  }
+
+  .totais-label {
+    font-size: 11px;
+  }
+
+  .totais-valor {
+    font-size: 16px;
+  }
+
+  .totais-detalhe {
+    font-size: 10px;
+    gap: 8px;
+  }
+
+  .livro-resumo {
+    padding: 12px;
+    margin-top: 8px;
+  }
+
+  .livro-resumo-item {
+    gap: 4px;
+  }
+
+  .livro-resumo-label {
+    font-size: 11px;
+  }
+
+  .livro-resumo-valor {
+    font-size: 14px;
+  }
+
+  .livro-resumo-badge {
+    padding: 6px 12px;
+    font-size: 12px;
+  }
+
+  /* Ajustar a seção de filtros */
+  .filter-section {
+    padding: 12px;
+    margin-bottom: 12px;
+  }
+
+  .filter-body {
+    gap: 8px;
+  }
+
+  .filter-select, .filter-input {
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .btn-pdf, .btn-del {
+    padding: 12px;
+    font-size: 14px;
+  }
+
+  /* Ajustar os cards da DRE */
+  .dre-cards {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .dre-card {
+    padding: 12px;
+  }
+
+  .dre-card-header {
+    gap: 6px;
+    margin-bottom: 6px;
+  }
+
+  .dre-icon {
+    font-size: 16px;
+  }
+
+  .dre-label {
+    font-size: 12px;
+  }
+
+  .dre-value {
+    font-size: 15px;
+  }
+
+  /* Ajustar as margens */
+  .margins-section {
+    gap: 8px;
+    margin-bottom: 12px;
+  }
+
+  .margin-card {
+    padding: 12px;
+  }
+
+  .margin-label {
+    font-size: 13px;
+  }
+
+  .margin-value {
+    font-size: 13px;
+  }
+
+  /* Ajustar o detalhamento DRE */
+  .detalhamento-section {
+    padding: 12px;
+    margin-top: 12px;
+  }
+
+  .dre-tabela {
+    font-size: 13px;
+  }
+
+  .dre-tabela th,
+  .dre-tabela td {
+    padding: 8px 6px;
+  }
+
+  .dre-periodo-info {
+    padding: 8px;
+    font-size: 12px;
+    margin-bottom: 10px;
+  }
+
+  .dre-resumo {
+    gap: 8px;
+    margin-top: 10px;
+  }
+
+  .dre-resumo-item {
+    padding: 8px;
+  }
+
+  .dre-resumo-label {
+    font-size: 11px;
+  }
+
+  .dre-resumo-valor {
+    font-size: 14px;
+  }
+
+  /* Ajustar o formulário de lançamento */
+  .form-container {
+    padding: 15px;
+  }
+
+  .form-grid {
+    gap: 12px;
+  }
+
+  .form-field label {
+    font-size: 13px;
+  }
+
+  .form-input, .form-select {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .form-actions {
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .btn-primary, .btn-secondary {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  /* Ajustar as configurações */
+  .config-grid {
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+
+  .config-card {
+    padding: 15px;
+  }
+
+  .config-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+  }
+
+  .config-card-header h3 {
+    font-size: 16px;
+  }
+
+  .config-card-header p {
+    font-size: 13px;
+  }
+
+  .config-input, .config-select {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .btn-config {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  /* Ajustar o modal */
+  .modal-box {
+    border-radius: 20px 20px 0 0;
+    max-height: 80vh;
+  }
+
+  .modal-header {
+    padding: 16px;
+  }
+
+  .modal-header h3 {
+    font-size: 18px;
+  }
+
+  .modal-body {
+    padding: 16px;
+  }
+
+  .modal-field {
+    margin-bottom: 16px;
+  }
+
+  .modal-field label {
+    font-size: 13px;
+    margin-bottom: 6px;
+  }
+
+  .modal-input, .modal-select {
+    padding: 12px;
+    font-size: 15px;
+  }
+
+  .modal-row {
+    gap: 12px;
+  }
+
+  .modal-footer {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .modal-footer .btn-primary,
+  .modal-footer .btn-secondary {
+    padding: 14px;
+    font-size: 15px;
+  }
+
+  /* Ajustar o botão de instalação */
+  #install-button {
+    bottom: 70px;
+    right: 15px;
+    padding: 10px 16px;
+    font-size: 13px;
+    z-index: 1001;
+  }
+
+  /* Garantir que o conteúdo não fique atrás da barra */
+  .bottom-nav {
+    backdrop-filter: blur(10px);
+    background: rgba(255, 255, 255, 0.98);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  /* Ajustar a página ativa */
+  .page.active {
+    min-height: 100%;
+    display: block;
+  }
+
+  /* Melhorar a rolagem */
+  .content-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .content-scroll::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 4px;
+  }
+}
+
+/* Ajustes para telas muito pequenas (menos de 360px) */
+@media (max-width: 360px) {
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .stat-card.highlight {
+    grid-column: span 1;
+  }
+
+  .entry-title {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .entry-badge {
+    align-self: flex-start;
+  }
+
+  .entry-actions {
+    flex-direction: column;
+  }
+
+  .dre-cards {
+    grid-template-columns: 1fr;
+  }
+
+  .livro-totais-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .livro-resumo {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+/* Ajuste para iPhone com notch */
+@supports (padding: max(0px)) {
+  .content-scroll {
+    padding-bottom: max(70px, env(safe-area-inset-bottom));
+  }
+
+  .bottom-nav {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .topbar {
+    padding-top: max(8px, env(safe-area-inset-top));
+  }
+}
+
+/* Garantir que o conteúdo não fique atrás da barra quando o teclado abrir */
+@media (max-height: 500px) {
+  .bottom-nav {
+    display: none;
+  }
+  
+  .content-scroll {
+    padding-bottom: 20px !important;
+  }
+}
