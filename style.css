@@ -3536,3 +3536,495 @@ html, body {
     font-size: 16px;
   }
 }
+
+/* ==================== GARANTIA DESKTOP ==================== */
+@media (min-width: 1024px) {
+    /* Forçar o layout correto */
+    #app.show {
+        flex-direction: row !important;
+    }
+    
+    /* Sidebar visível com largura fixa */
+    .sidebar {
+        display: flex !important;
+        width: 240px !important;
+        flex-shrink: 0 !important;
+        height: 100vh !important;
+        position: relative !important;
+    }
+    
+    /* Conteúdo ocupando o resto */
+    .content-scroll {
+        flex: 1 1 auto !important;
+        width: calc(100% - 240px) !important; /* Fallback seguro */
+        padding: 24px !important;
+        overflow-y: auto !important;
+    }
+    
+    /* Esconder elementos mobile */
+    .topbar, .bottom-nav {
+        display: none !important;
+    }
+}
+/* ==================== ANIMAÇÕES PARA DESCRIÇÕES ==================== */
+
+/* Animação da lupa */
+@keyframes searchPulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+    box-shadow: 0 0 15px var(--primary);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+}
+
+.lupa-animation {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--primary);
+  color: white;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 40px;
+  z-index: 9999;
+  animation: searchPulse 0.8s ease-in-out;
+  box-shadow: 0 4px 20px rgba(227, 29, 26, 0.5);
+  pointer-events: none;
+}
+
+/* Animação de fade out para exclusão */
+@keyframes fadeOutSlide {
+  0% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(50px);
+  }
+}
+
+.descricao-item-categoria.removendo {
+  animation: fadeOutSlide 0.3s ease forwards;
+}
+
+/* Feedback visual no botão */
+.btn-add.cadastrando {
+  animation: buttonPulse 0.5s ease;
+}
+
+@keyframes buttonPulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+    background: var(--success);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* Tooltip de confirmação */
+.tooltip-sucesso {
+  position: absolute;
+  background: var(--success);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  top: -30px;
+  right: 0;
+  animation: tooltipFade 1.5s ease forwards;
+  white-space: nowrap;
+  box-shadow: 0 2px 8px rgba(16, 185, 129, 0.3);
+  z-index: 100;
+}
+
+.tooltip-sucesso::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  right: 20px;
+  width: 10px;
+  height: 10px;
+  background: var(--success);
+  transform: rotate(45deg);
+}
+
+@keyframes tooltipFade {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  20% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  80% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+}
+
+/* Efeito de brilho no item adicionado */
+@keyframes highlightNew {
+  0% {
+    background: rgba(227, 29, 26, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    background: rgba(227, 29, 26, 0.1);
+    transform: scale(1.02);
+  }
+  100% {
+    background: transparent;
+    transform: scale(1);
+  }
+}
+
+.descricao-item-categoria.novo {
+  animation: highlightNew 1s ease;
+}
+/* ==================== ANIMAÇÕES PARA BOTÕES ==================== */
+
+@keyframes buttonSave {
+  0% {
+    transform: scale(1);
+    background: var(--primary);
+  }
+  30% {
+    transform: scale(1.05);
+    background: var(--success);
+    box-shadow: 0 0 15px var(--success);
+  }
+  70% {
+    transform: scale(0.98);
+    background: var(--success);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--primary);
+  }
+}
+
+@keyframes buttonEdit {
+  0% {
+    transform: scale(1);
+    background: var(--info);
+  }
+  30% {
+    transform: scale(1.05);
+    background: var(--info);
+    box-shadow: 0 0 15px var(--info);
+  }
+  70% {
+    transform: scale(0.98);
+    background: var(--info);
+  }
+  100% {
+    transform: scale(1);
+    background: var(--info);
+  }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes checkmark {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.btn-primary.salvando {
+  position: relative;
+  animation: buttonSave 0.8s ease;
+  pointer-events: none;
+  background: var(--success) !important;
+  overflow: hidden;
+}
+
+.btn-primary.salvando::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  animation: ripple 0.8s ease-out;
+}
+
+@keyframes ripple {
+  0% {
+    width: 0;
+    height: 0;
+    opacity: 0.5;
+  }
+  100% {
+    width: 300px;
+    height: 300px;
+    opacity: 0;
+  }
+}
+
+.btn-primary.salvando svg {
+  animation: spin 0.6s linear infinite;
+}
+
+.btn-primary.salvo {
+  background: var(--success) !important;
+  pointer-events: none;
+}
+
+.btn-primary.salvo svg {
+  animation: checkmark 0.4s ease;
+}
+
+.btn-primary.salvo .btn-text {
+  animation: checkmark 0.4s ease;
+}
+
+.btn-primary.erro {
+  background: var(--danger) !important;
+  animation: buttonError 0.5s ease;
+}
+
+@keyframes buttonError {
+  0%, 100% {
+    transform: translateX(0);
+  }
+  20%, 60% {
+    transform: translateX(-5px);
+  }
+  40%, 80% {
+    transform: translateX(5px);
+  }
+}
+
+/* Animação para o modal */
+.btn-primary.modal-salvando {
+  position: relative;
+  background: var(--info) !important;
+  animation: buttonEdit 0.8s ease;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.btn-primary.modal-salvando::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transform: translate(-50%, -50%);
+  animation: shimmer 1.2s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%) translateY(-50%);
+  }
+  100% {
+    transform: translateX(100%) translateY(-50%);
+  }
+}
+
+.btn-primary.modal-salvando svg {
+  animation: spin 0.6s linear infinite;
+}
+
+.btn-primary.modal-salvo {
+  background: var(--success) !important;
+}
+
+.btn-primary.modal-salvo svg {
+  animation: checkmark 0.4s ease;
+}
+
+/* Toast personalizado */
+.custom-toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: white;
+  border-radius: 12px;
+  padding: 12px 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  z-index: 10000;
+  animation: slideInRight 0.3s ease;
+  border-left: 4px solid var(--success);
+  max-width: 350px;
+}
+
+.custom-toast.error {
+  border-left-color: var(--danger);
+}
+
+.custom-toast.warning {
+  border-left-color: var(--warning);
+}
+
+.custom-toast.info {
+  border-left-color: var(--info);
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.toast-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+}
+
+.toast-icon.success {
+  background: var(--success-light);
+  color: var(--success);
+}
+
+.toast-icon.error {
+  background: var(--danger-light);
+  color: var(--danger);
+}
+
+.toast-icon.warning {
+  background: var(--warning-light);
+  color: var(--warning);
+}
+
+.toast-icon.info {
+  background: var(--info-light);
+  color: var(--info);
+}
+
+.toast-content {
+  flex: 1;
+}
+
+.toast-title {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--gray-800);
+  margin-bottom: 2px;
+}
+
+.toast-message {
+  font-size: 12px;
+  color: var(--gray-500);
+}
+
+.toast-close {
+  background: none;
+  border: none;
+  color: var(--gray-400);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 4px;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.toast-close:hover {
+  background: var(--gray-100);
+  color: var(--gray-600);
+}
+
+/* Animação de pulso para o ícone */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.pulse-animation {
+  animation: pulse 0.6s ease infinite;
+}
+
+/* Efeito de brilho no card quando salva */
+@keyframes cardGlow {
+  0% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 20px 5px rgba(16, 185, 129, 0.3);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+  }
+}
+
+.entry-card.saved {
+  animation: cardGlow 1s ease;
+}
